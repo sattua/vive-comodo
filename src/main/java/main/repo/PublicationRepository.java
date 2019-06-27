@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface PublicationRepository extends CrudRepository<Publication, Integer> {
     List<Publication> findAll();
-
+    Publication findById(int id);
 
     @Query(value = "SELECT * FROM publication",
             countQuery = "SELECT count(*) FROM publication",

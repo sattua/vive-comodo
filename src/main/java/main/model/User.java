@@ -1,9 +1,12 @@
 package main.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Entity
 public class User {
     @Id
@@ -17,15 +20,13 @@ public class User {
     @ManyToMany(targetEntity=Rol.class, fetch=FetchType.EAGER)
     private List<Rol> roles;
 
-    public User() {
-    }
-
-    public User(String firstName, String lastName) {
+    User(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
     }
 
-    public User(String firstName, String lastName, String email, Rol type) {
+    User(String firstName, String lastName, String email, Rol type) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -79,5 +80,12 @@ public class User {
 
     public void setRoles(List<Rol> roles) {
         this.roles = roles;
+    }
+
+    public void setARol(Rol rol) {
+        if (this.roles == null || this.roles.size() < 1) {
+            this.roles = new ArrayList<>();
+        }
+        this.roles.add(rol);
     }
 }

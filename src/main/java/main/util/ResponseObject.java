@@ -1,10 +1,15 @@
 package main.util;
 
-public class ResponseObject {
-    Object body = null;
-    Long hits = 0l;
+import javax.persistence.*;
 
-    public ResponseObject(Object body, Long hits) {
+@Entity
+public class ResponseObject {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private String body = null;
+    private Long hits = 0l;
+
+    public ResponseObject(String body, Long hits) {
         this.body = body;
         this.hits = hits;
     }
