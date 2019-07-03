@@ -1,7 +1,9 @@
 package main.model;
 
-import javax.persistence.*;
+import lombok.Data;
 
+import javax.persistence.*;
+@Data
 @Entity
 public class Rol {
 
@@ -10,11 +12,11 @@ public class Rol {
     private Integer id;
     private String type;
 
-    public Rol() {
-    }
-
     public Rol(Rol.Type type) {
         this.type = type.toString();
+    }
+
+    public Rol() {
     }
 
     public Integer getId() {

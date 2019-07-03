@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,13 +45,8 @@ public class PublicationController {
     }
 
     @PostMapping("/")
-    public Publication createPublication(
-            @RequestBody String title,
-            @RequestBody String desc,
-            @RequestBody String address,
-            @RequestBody MultipartFile imagesFiles) {
-//TODO test info in bookmarks for MultipartFile, need to use @requestBody
-        Publication publication = new Publication(title, desc, address);
+    public Publication createPublication(@RequestBody Publication publication) {
+        publication.setStatus(1);
 
         //TODO needs images, at least one
         List<PublicationImage> images = new ArrayList<>();
@@ -64,7 +60,14 @@ public class PublicationController {
         return publication;
     }
 
-    @RequestMapping(value = "/new")
+
+    @RequestMapping(value = "/anUploadEndpoint", method = RequestMethod.POST)
+    @ResponseBody
+    public String doUploadEndpoint(@RequestParam("file") MultipartFile uploadedFile) {
+        return "ok";
+    }
+
+    @RequestMapping(value = "/")
     public ResponseEntity<Publication> get(
             @RequestParam(value="id") int id
     ) {
