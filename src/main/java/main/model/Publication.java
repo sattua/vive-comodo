@@ -1,11 +1,14 @@
 package main.model;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import lombok.Data;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -13,11 +16,22 @@ import java.util.List;
 public class Publication {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     private String title;
     private String description;
     private String address;
     private Integer status; // 0 -created, 1- published, 2-disable, 3- taken
+    private String location; // longitude, altitude in world map
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_created")
+    private Date dateCreated;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_updated")
+    private Date lastUpdated;
 
     @OneToMany(targetEntity=PublicationImage.class, fetch = FetchType.LAZY)
     @LazyCollection(LazyCollectionOption.EXTRA)
@@ -61,11 +75,21 @@ public class Publication {
         this.publicationAttributes = publicationAttributes;
     }
 
-    public Integer getId() {
+    public Publication(String title, String description, String address, Integer status, String location, List<PublicationImage> publicationImages, List<PublicationAttribute> publicationAttributes) {
+        this.title = title;
+        this.description = description;
+        this.address = address;
+        this.status = status;
+        this.location = location;
+        this.publicationImages = publicationImages;
+        this.publicationAttributes = publicationAttributes;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -123,5 +147,29 @@ public class Publication {
 
     public void setPublicationAttributes(List<PublicationAttribute> publicationAttributes) {
         this.publicationAttributes = publicationAttributes;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }

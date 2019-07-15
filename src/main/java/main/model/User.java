@@ -1,9 +1,12 @@
 package main.model;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -11,7 +14,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String firstName;
     private String lastName;
@@ -19,6 +22,16 @@ public class User {
     private String email;
     @ManyToMany(targetEntity=Rol.class, fetch=FetchType.EAGER)
     private List<Rol> roles;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_created")
+    private Date dateCreated;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_updated")
+    private Date lastUpdated;
 
     User(String firstName, String lastName, String email) {
         this.firstName = firstName;
@@ -34,11 +47,11 @@ public class User {
         this.roles.add(type);
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

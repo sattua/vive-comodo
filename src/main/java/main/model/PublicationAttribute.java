@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class PublicationAttribute {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    private Long id;
     private String name;
     private String description;
 
@@ -21,11 +21,11 @@ public class PublicationAttribute {
         this.description = description;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

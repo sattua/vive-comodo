@@ -3,8 +3,10 @@ package main.repo;
 import main.model.PublicationImage;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface PublicationImageRepository extends JpaRepository<PublicationImage, Integer> {
+@Repository
+public interface PublicationImageRepository extends JpaRepository<PublicationImage, Long> {
 
 
 }

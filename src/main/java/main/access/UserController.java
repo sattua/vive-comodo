@@ -23,13 +23,14 @@ public class UserController {
 
     @PostMapping("/signin")
     public ResponseEntity<User> signIn(@RequestBody User user, @RequestParam(value = "rol") String rol) {
+        // TODO refactor - FE is not sending the rol id? ..
         if (isInvalidNewUser(user)) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
         try {
-            //TODO looks like it is not saving the user-rol map in the db.
             user.setARol(getNewUserRol(rol));
+            userRepository.save(user);
             return new ResponseEntity(user, HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
